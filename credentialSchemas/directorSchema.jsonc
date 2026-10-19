@@ -1,0 +1,134 @@
+// Below is an example credential schema for issuing a DirectorId credential.
+// It contains the following data:
+//    - id (of wallet user)
+//    - directorId no. 
+//    - name of Director
+//    - appointment Date
+//    - entity (director of)
+//    - jurisdiction (state)
+// During SD it discloses only the name of the director and their directorId number. (these are the fields chosen by the wallet to disclose or not)
+//    - currently only DOB, appointmentDate and jurisdiction are SD
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "DirectorIdCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2"
+    ],
+    "id": "",
+    "type": [
+      "VerifiableCredential",
+      "DirectorIdCredential"
+    ],
+    "name": "Director Id Credential",
+    "description": "A Director ID is a 15-digit identifier issued by ABRS to individuals appointed as company directors in Australia.",
+    "issuer": {
+      "type": [
+        "Profile"
+      ],
+      "name": "Australian Business Registry Services",
+      "url": "https://www.abrs.gov.au/director-identification-number",
+      "image": "https://www.abrs.gov.au/themes/custom/mbr/logo.png",
+      "background_color": "#393D3F",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "directorId": "123456789012345",
+      "name": "Mr Wallet",
+      "DOB": "19/12/96",
+      "appointmentDate": "2025-12-01",
+      "entity": "Mr Wallet Company PTY LTD",
+      "jurisdiction": "AU",
+      "status": "active"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "validFrom": "<timestamp>",
+    "valid": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "DOB": {
+              "sd": true
+            },
+            "appointmentDate": {
+              "sd": true
+            },
+            "jurisdiction": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}
+// Below is credential offer URL that can be used to claim credential in wallet. 
+// openid-credential-offer://?credential_offer_uri=http%3A%2F%2Flocalhost%3A7002%2Fdraft13%2FcredentialOffer%3Fid%3De2c62572-a40c-488a-bdc4-1e5b725e6c5c
+
+// Below is the response body recieved by the wallet as an example of the format.
+// [
+//   {
+//     "wallet": "63b763ad-d0eb-4d98-963c-89e19e3eee3d",
+//     "id": "urn:uuid:1b231aee-a875-4061-9d5c-5e21107abb35",
+//     "document": "eyJraWQiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAjRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsInR5cCI6IkpXVCIsImFsZyI6IkVkRFNBIn0.eyJpc3MiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAiLCJzdWIiOiIiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiXSwiaWQiOiJ1cm46dXVpZDoxYjIzMWFlZS1hODc1LTQwNjEtOWQ1Yy01ZTIxMTA3YWJiMzUiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiRGlyZWN0b3JJZENyZWRlbnRpYWwiXSwibmFtZSI6IkRpcmVjdG9yIElkIENyZWRlbnRpYWwiLCJkZXNjcmlwdGlvbiI6IkEgRGlyZWN0b3IgSUQgaXMgYSAxNS1kaWdpdCBpZGVudGlmaWVyIGlzc3VlZCBieSBBQlJTIHRvIGluZGl2aWR1YWxzIGFwcG9pbnRlZCBhcyBjb21wYW55IGRpcmVjdG9ycyBpbiBBdXN0cmFsaWEuIiwiaXNzdWVyIjp7InR5cGUiOlsiUHJvZmlsZSJdLCJuYW1lIjoiQXVzdHJhbGlhbiBCdXNpbmVzcyBSZWdpc3RyeSBTZXJ2aWNlcyIsInVybCI6Imh0dHBzOi8vd3d3LmFicnMuZ292LmF1L2RpcmVjdG9yLWlkZW50aWZpY2F0aW9uLW51bWJlciIsImltYWdlIjoiaHR0cHM6Ly93d3cuYWJycy5nb3YuYXUvdGhlbWVzL2N1c3RvbS9tYnIvbG9nby5wbmciLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzM5M0QzRiIsInRleHRfY29sb3IiOiIjRkZGRkZGIiwiaWQiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAifSwiY3JlZGVudGlhbFN1YmplY3QiOnsiZGlyZWN0b3JJZCI6IjEyMzQ1Njc4OTAxMjM0NSIsIm5hbWUiOiJNciBXYWxsZXQiLCJlbnRpdHkiOiJNciBXYWxsZXQgQ29tcGFueSBQVFkgTFREIiwic3RhdHVzIjoiYWN0aXZlIiwiX3NkIjpbImF4a1pYWG9Sc29BUWFrZ1RwRzBYcUhpMFVfTzdSOGVyZm1vaWhGaE9kUmMiLCIwQzZMMTY4STdzb2xPc1g3UmtFcE5NNGluQXd5RW12WnNvTURpeG11Y0FrIiwiSFF2eVc2WW1laTVhNlJWYVJTS1ZCR3N2VFlJR0I4dXFRSWZ1RkhMN2NDWSJdfSwidmFsaWRGcm9tIjoiMjAyNi0wMy0yNVQwMjo0MjoxMS4yMDMyNTg2NzNaIiwidmFsaWQiOiIyMDI3LTAzLTI1VDAyOjQyOjExLjIwMzMyMzA0OFoifSwianRpIjoidXJuOnV1aWQ6MWIyMzFhZWUtYTg3NS00MDYxLTlkNWMtNWUyMTEwN2FiYjM1In0.9Apx3bN4ifBYY9-9w9yf-PEGYti-m2bAayKeF-wNO-JOmmfa_Advd3NjMx-DUllaQms1oKo_8ZjT1pfJLXGIAg",
+//     "disclosures": "WyJ6YU9YczhQRmFNb0dWOXBjOUFROXpRIiwiRE9CIiwiMTkvMTIvOTYiXQ~WyJFdTNyazc0YlRPVk9TSndpejM1bUdRIiwiYXBwb2ludG1lbnREYXRlIiwiMjAyNS0xMi0wMSJd~WyJMaURrdHB6MzdTX05Fc0VKTDZVM2JnIiwianVyaXNkaWN0aW9uIiwiQVUiXQ",
+//     "addedOn": "2026-03-25T02:42:11.218477715Z",
+//     "pending": false,
+//     "format": "jwt_vc_json",
+//     "parsedDocument": {
+//       "@context": [
+//         "https://www.w3.org/ns/credentials/v2"
+//       ],
+//       "id": "urn:uuid:1b231aee-a875-4061-9d5c-5e21107abb35",
+//       "type": [
+//         "VerifiableCredential",
+//         "DirectorIdCredential"
+//       ],
+//       "name": "Director Id Credential",
+//       "description": "A Director ID is a 15-digit identifier issued by ABRS to individuals appointed as company directors in Australia.",
+//       "issuer": {
+//         "type": [
+//           "Profile"
+//         ],
+//         "name": "Australian Business Registry Services",
+//         "url": "https://www.abrs.gov.au/director-identification-number",
+//         "image": "https://www.abrs.gov.au/themes/custom/mbr/logo.png",
+//         "background_color": "#393D3F",
+//         "text_color": "#FFFFFF",
+//         "id": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+//       },
+//       "credentialSubject": {
+//         "directorId": "123456789012345",
+//         "name": "Mr Wallet",
+//         "entity": "Mr Wallet Company PTY LTD",
+//         "status": "active",
+//         "_sd": [
+//           "axkZXXoRsoAQakgTpG0XqHi0U_O7R8erfmoihFhOdRc", -- DOB
+//           "0C6L168I7solOsX7RkEpNM4inAwyEmvZsoMDixmucAk", -- appointment date
+//           "HQvyW6Ymei5a6RVaRSKVBGsvTYIGB8uqQIfuFHL7cCY"  -- jurisdiction
+//         ]
+//       },
+//       "validFrom": "2026-03-25T02:42:11.203258673Z",
+//       "valid": "2027-03-25T02:42:11.203323048Z"
+//     }
+//   }
+// ]

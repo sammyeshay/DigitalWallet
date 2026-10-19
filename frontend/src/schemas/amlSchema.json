@@ -1,0 +1,68 @@
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "AmlComplianceCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "id": "",
+    "type": ["VerifiableCredential", "AmlComplianceCredential"],
+    "name": "AML Compliance Credential",
+    "description": "Credential confirming that an entity complies with Anti-Money Laundering regulatory requirements.",
+    "issuer": {
+      "type": ["Profile"],
+      "name": "Australian Compliance institute",
+      "url": "https://compliance.org.au/",
+      "image": "https://compliance.org.au/wp-content/uploads/2024/10/ACI_logo_2023_HZT.png",
+      "background_color": "#62929E",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "name": "Mr Wallet",
+      "DOB": "19/12/96",
+      "amlStatus": "compliant",
+      "checkDate": "2026-03-01",
+      "jurisdiction": "AU",
+      "riskLevel": "low"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "credentialSubject": {
+      "id": "<subjectDid>"
+    },
+    "validFrom": "<timestamp>",
+    "valid": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "DOB": {
+              "sd": true
+            },
+            "checkDate": {
+              "sd": true
+            },
+            "jurisdiction": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}

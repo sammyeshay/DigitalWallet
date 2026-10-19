@@ -1,0 +1,135 @@
+// Below is an example credential schema for issuing a Ubo attestation credential.
+// It contains the following data:
+//    - name
+//    - ubo Id
+//    - DOB
+//    - company Id (registration number)
+//    - ownership percentage
+//    - jurisdiction
+//    - status
+//    - currently only DOB, companyId and jurisdiction are SD
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "UboAttestationCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2"
+    ],
+    "id": "",
+    "type": [
+      "VerifiableCredential",
+      "UboAttestationCredential"
+    ],
+    "name": "UBO Attestation Credential",
+    "description": "Credential confirming the verified Ultimate Beneficial Owner of a legal entity. This is an individual who ultimately owns or controls the entity",
+    "issuer": {
+      "type": [
+        "Profile"
+      ],
+      "name": "Australian Transaction Reports and Analysis Centre",
+      "url": "https://www.austrac.gov.au/business/core-guidance/customer-identification-and-verification/beneficial-owners",
+      "image": "https://www.austrac.gov.au/themes/custom/austrac/logo.svg",
+      "background_color": "#C6C5B9",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "name": "Mr Wallet",
+      "uboID": "12345678",
+      "DOB": "19/12/96",
+      "companyId": "ACN123456789",
+      "ownershipPercentage": 60,
+      "jurisdiction": "AU",
+      "status": "active"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "credentialSubject": {
+      "id": "<subjectDid>"
+    },
+    "validFrom": "<timestamp>",
+    "valid": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "DOB": {
+              "sd": true
+            },
+            "companyId": {
+              "sd": true
+            },
+            "jurisdiction": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}
+// Below is credential offer URL that can be used to claim credential in wallet. 
+// openid-credential-offer://?credential_offer_uri=http%3A%2F%2Flocalhost%3A7002%2Fdraft13%2FcredentialOffer%3Fid%3D14cb50b5-7500-41f7-80a5-e2dcc362d1f5
+// [
+//   {
+//     "wallet": "63b763ad-d0eb-4d98-963c-89e19e3eee3d",
+//     "id": "urn:uuid:93b75b3c-b4f8-46fd-a0d1-089ae0df4aaa",
+//     "document": "eyJraWQiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAjRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsInR5cCI6IkpXVCIsImFsZyI6IkVkRFNBIn0.eyJpc3MiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAiLCJzdWIiOiIiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiXSwiaWQiOiJ1cm46dXVpZDo5M2I3NWIzYy1iNGY4LTQ2ZmQtYTBkMS0wODlhZTBkZjRhYWEiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiVWJvQXR0ZXN0YXRpb25DcmVkZW50aWFsIl0sIm5hbWUiOiJVQk8gQXR0ZXN0YXRpb24gQ3JlZGVudGlhbCIsImRlc2NyaXB0aW9uIjoiQ3JlZGVudGlhbCBjb25maXJtaW5nIHRoZSB2ZXJpZmllZCBVbHRpbWF0ZSBCZW5lZmljaWFsIE93bmVyIG9mIGEgbGVnYWwgZW50aXR5LiBUaGlzIGlzIGFuIGluZGl2aWR1YWwgd2hvIHVsdGltYXRlbHkgb3ducyBvciBjb250cm9scyB0aGUgZW50aXR5IiwiaXNzdWVyIjp7InR5cGUiOlsiUHJvZmlsZSJdLCJuYW1lIjoiQXVzdHJhbGlhbiBUcmFuc2FjdGlvbiBSZXBvcnRzIGFuZCBBbmFseXNpcyBDZW50cmUiLCJ1cmwiOiJodHRwczovL3d3dy5hdXN0cmFjLmdvdi5hdS9idXNpbmVzcy9jb3JlLWd1aWRhbmNlL2N1c3RvbWVyLWlkZW50aWZpY2F0aW9uLWFuZC12ZXJpZmljYXRpb24vYmVuZWZpY2lhbC1vd25lcnMiLCJpbWFnZSI6Imh0dHBzOi8vd3d3LmF1c3RyYWMuZ292LmF1L3RoZW1lcy9jdXN0b20vYXVzdHJhYy9sb2dvLnN2ZyIsImJhY2tncm91bmRfY29sb3IiOiIjQzZDNUI5IiwidGV4dF9jb2xvciI6IiNGRkZGRkYiLCJpZCI6ImRpZDpqd2s6ZXlKcmRIa2lPaUpQUzFBaUxDSmpjbllpT2lKRlpESTFOVEU1SWl3aWEybGtJam9pUlVwQllWSjBWV3BaT0hCMmFHTkRObGRrTFhsM2NXaGFkbWRTTTNvMlRYRlZTV05tT1VSeVJEWXdSU0lzSW5naU9pSnhiekJGY2xWd1lVazJWMkZzVlZjMlJ6TjFOMlY2T1RSU09YTk1XbVF0Y2pGdFUzTlRNSFZHWlZkekluMCJ9LCJjcmVkZW50aWFsU3ViamVjdCI6eyJuYW1lIjoiTXIgV2FsbGV0IiwidWJvSUQiOiIxMjM0NTY3OCIsIm93bmVyc2hpcFBlcmNlbnRhZ2UiOjYwLCJzdGF0dXMiOiJjdXJyZW50IiwiX3NkIjpbIkM0NGlkWkNCdHlldXhWRFA0RFdFaTJiYVlIRUtscTRRT19ENVZaQzVVOUUiLCJuSE56ODZNV0g0SWltRnFBQlM4Y0xfckdoOVNFbmRUMk5yemFUbE5hX2R3IiwiNmRIRVB3REtRRXkyZkxnRjRjRlhjcGtsdFZjUGN1b24xd1pxb200dDBtdyJdfSwidmFsaWRGcm9tIjoiMjAyNi0wMy0yNVQwMjo1MDoxMy4wODU5MTY2NzRaIiwidmFsaWQiOiIyMDI3LTAzLTI1VDAyOjUwOjEzLjA4NTk1NzM4M1oifSwianRpIjoidXJuOnV1aWQ6OTNiNzViM2MtYjRmOC00NmZkLWEwZDEtMDg5YWUwZGY0YWFhIn0.ZdlxkDXwvOnIqowa_fx-goshTtuo450cIPvYH89QEXdzgzGbxYtPSl-lQvFw-4LmfiyHo8DpHhCwljdobnFGBg",
+//     "disclosures": "WyJmb3J2YklVV1c4RzNfVWhQeFZBT1pBIiwiRE9CIiwiMTkvMTIvOTYiXQ~WyJ6TjFFRzVlem9NNm1qTzAyNUNLYmVnIiwiY29tcGFueUlkIiwiQUNOMTIzNDU2Nzg5Il0~WyJZVjdDZDU0STI0Ty1NRWh5U19ORDN3IiwianVyaXNkaWN0aW9uIiwiQVUiXQ",
+//     "addedOn": "2026-03-25T02:50:13.097234299Z",
+//     "pending": false,
+//     "format": "jwt_vc_json",
+//     "parsedDocument": {
+//       "@context": [
+//         "https://www.w3.org/ns/credentials/v2"
+//       ],
+//       "id": "urn:uuid:93b75b3c-b4f8-46fd-a0d1-089ae0df4aaa",
+//       "type": [
+//         "VerifiableCredential",
+//         "UboAttestationCredential"
+//       ],
+//       "name": "UBO Attestation Credential",
+//       "description": "Credential confirming the verified Ultimate Beneficial Owner of a legal entity. This is an individual who ultimately owns or controls the entity",
+//       "issuer": {
+//         "type": [
+//           "Profile"
+//         ],
+//         "name": "Australian Transaction Reports and Analysis Centre",
+//         "url": "https://www.austrac.gov.au/business/core-guidance/customer-identification-and-verification/beneficial-owners",
+//         "image": "https://www.austrac.gov.au/themes/custom/austrac/logo.svg",
+//         "background_color": "#C6C5B9",
+//         "text_color": "#FFFFFF",
+//         "id": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+//       },
+//       "credentialSubject": {
+//         "name": "Mr Wallet",
+//         "uboID": "12345678",
+//         "ownershipPercentage": 60,
+//         "status": "current",
+//         "_sd": [
+//           "C44idZCBtyeuxVDP4DWEi2baYHEKlq4QO_D5VZC5U9E", -- DOB
+//           "nHNz86MWH4IimFqABS8cL_rGh9SEndT2NrzaTlNa_dw", -- company Id
+//           "6dHEPwDKQEy2fLgF4cFXcpkltVcPcuon1wZqom4t0mw"  -- jurisdiction
+//         ]
+//       },
+//       "validFrom": "2026-03-25T02:50:13.085916674Z",
+//       "valid": "2027-03-25T02:50:13.085957383Z"
+//     }
+//   }
+// ]

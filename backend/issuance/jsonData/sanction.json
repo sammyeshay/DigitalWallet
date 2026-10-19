@@ -1,0 +1,72 @@
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "SanctionScreeningCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "id": "",
+    "type": ["VerifiableCredential", "SanctionScreeningCredential"],
+    "name": "Sanctions Screening Credential",
+    "description": "Credential confirming that an individual or entity has been screened against international sanctions lists.",
+    "issuer": {
+      "type": ["Profile"],
+      "name": "Australian Government: Department of Foreign Affairs and Trade",
+      "url": "https://www.dfat.gov.au/international-relations/security/sanctions",
+      "image": "https://www.abrs.gov.au/themes/custom/mbr/logo.png",
+      "background_color": "#546A7B",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "name": "Mr Wallet",
+      "DOB": "19/12/96",
+      "screeningDate": "2026-03-01",
+      "screeningResult": "clear",
+      "listsChecked": ["UN", "OFAC", "EU"],
+      "jurisdiction": "AU"
+    },
+    "credentialStatus": {
+      "id": "to_be_generated",
+      "type": "BitstringStatusListEntry",
+      "statusPurpose": "revocation",
+      "statusListIndex": "to_be_generated",
+      "statusListCredential": "to_be_generated"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "credentialSubject": {
+      "id": "<subjectDid>"
+    },
+    "validFrom": "<timestamp>",
+    "validUntil": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "DOB": {
+              "sd": true
+            },
+            "jurisdiction": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}

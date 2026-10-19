@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.2"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "test": "npm --prefix frontend test -- --watchAll=false && cd backend && python -m pytest"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,ts,tsx}": "npm --prefix frontend run lint -- --fix",
+    "backend/**/*.py": "ruff check --fix",
+    "*.{json,md}": "prettier --write"
+  }
+}

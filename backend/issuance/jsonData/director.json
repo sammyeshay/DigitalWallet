@@ -1,0 +1,75 @@
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "DirectorIdCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "id": "",
+    "type": ["VerifiableCredential", "DirectorIdCredential"],
+    "name": "Director Id Credential",
+    "description": "A Director ID is a 15-digit identifier issued by ABRS to individuals appointed as company directors in Australia.",
+    "issuer": {
+      "type": ["Profile"],
+      "name": "Australian Business Registry Services",
+      "url": "https://www.abrs.gov.au/director-identification-number",
+      "image": "https://www.abrs.gov.au/themes/custom/mbr/logo.png",
+      "background_color": "#393D3F",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "directorId": "123456789012345",
+      "name": "Mr Wallet99",
+      "DOB": "19/12/96",
+      "appointmentDate": "2025-12-01",
+      "entity": "Mr Wallet Company PTY LTD",
+      "jurisdiction": "AU"
+    },
+    "credentialStatus": {
+      "id": "to_be_generated",
+      "type": "BitstringStatusListEntry",
+      "statusPurpose": "revocation",
+      "statusListIndex": "to_be_generated",
+      "statusListCredential": "to_be_generated"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "credentialSubject": {
+      "id": "<subjectDid>"
+    },
+    "validFrom": "<timestamp>",
+    "validUntil": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "DOB": {
+              "sd": true
+            },
+            "appointmentDate": {
+              "sd": true
+            },
+            "jurisdiction": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}

@@ -1,0 +1,133 @@
+// Below is an example credential schema for issuing a Corporate Registration credential.
+// It contains the following data:
+//    - company name
+//    - registration number
+//    - jurisdiction
+//    - incorporation date
+//    - status
+//    - registered address
+//    - currently only jurisidction, incorporation date and address are SD
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "CorporateRegistrationCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2"
+    ],
+    "id": "",
+    "type": [
+      "VerifiableCredential",
+      "CorporateRegistrationCredential"
+    ],
+    "name": "Corporate Registration Credential",
+    "description": "Credential proving that a company is officially registered with the relevant corporate registry.",
+    "issuer": {
+      "type": [
+        "Profile"
+      ],
+      "name": "Australian Securities & Investments Commission",
+      "url": "https://www.asic.gov.au/for-business-and-companies/companies/register-a-company/",
+      "image": "https://download.asic.gov.au/asic-nextgen/img/asic-logo.svg",
+      "background_color": "#FDFDFF",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "companyName": "Mr Wallet Pty Ltd",
+      "registrationNumber": "ACN123456789",
+      "jurisdiction": "AU",
+      "incorporationDate": "2015-06-01",
+      "status": "active",
+      "registeredAddress": "123 Fox St, Sydney, AU"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "credentialSubject": {
+      "id": "<subjectDid>"
+    },
+    "validFrom": "<timestamp>",
+    "valid": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "jurisdiction": {
+              "sd": true
+            },
+            "incorporationDate": {
+              "sd": true
+            },
+            "registeredAddress": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}
+// Below is credential offer URL that can be used to claim credential in wallet. 
+// openid-credential-offer://?credential_offer_uri=http%3A%2F%2Flocalhost%3A7002%2Fdraft13%2FcredentialOffer%3Fid%3Dc5d813e4-9268-4582-bffb-8240090a3266
+// Below is the response body recieved by the wallet as an example of the format.
+// [
+//   {
+//     "wallet": "63b763ad-d0eb-4d98-963c-89e19e3eee3d",
+//     "id": "urn:uuid:36fb8dd8-1504-49eb-aa17-b5f8640ca2e9",
+//     "document": "eyJraWQiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAjRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsInR5cCI6IkpXVCIsImFsZyI6IkVkRFNBIn0.eyJpc3MiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAiLCJzdWIiOiIiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiXSwiaWQiOiJ1cm46dXVpZDozNmZiOGRkOC0xNTA0LTQ5ZWItYWExNy1iNWY4NjQwY2EyZTkiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiQ29ycG9yYXRlUmVnaXN0cmF0aW9uQ3JlZGVudGlhbCJdLCJuYW1lIjoiQ29ycG9yYXRlIFJlZ2lzdHJhdGlvbiBDcmVkZW50aWFsIiwiZGVzY3JpcHRpb24iOiJDcmVkZW50aWFsIHByb3ZpbmcgdGhhdCBhIGNvbXBhbnkgaXMgb2ZmaWNpYWxseSByZWdpc3RlcmVkIHdpdGggdGhlIHJlbGV2YW50IGNvcnBvcmF0ZSByZWdpc3RyeS4iLCJpc3N1ZXIiOnsidHlwZSI6WyJQcm9maWxlIl0sIm5hbWUiOiJBdXN0cmFsaWFuIFNlY3VyaXRpZXMgJiBJbnZlc3RtZW50cyBDb21taXNzaW9uIiwidXJsIjoiaHR0cHM6Ly93d3cuYXNpYy5nb3YuYXUvZm9yLWJ1c2luZXNzLWFuZC1jb21wYW5pZXMvY29tcGFuaWVzL3JlZ2lzdGVyLWEtY29tcGFueS8iLCJpbWFnZSI6Imh0dHBzOi8vZG93bmxvYWQuYXNpYy5nb3YuYXUvYXNpYy1uZXh0Z2VuL2ltZy9hc2ljLWxvZ28uc3ZnIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGREZERkYiLCJ0ZXh0X2NvbG9yIjoiI0ZGRkZGRiIsImlkIjoiZGlkOmp3azpleUpyZEhraU9pSlBTMUFpTENKamNuWWlPaUpGWkRJMU5URTVJaXdpYTJsa0lqb2lSVXBCWVZKMFZXcFpPSEIyYUdORE5sZGtMWGwzY1doYWRtZFNNM28yVFhGVlNXTm1PVVJ5UkRZd1JTSXNJbmdpT2lKeGJ6QkZjbFZ3WVVrMlYyRnNWVmMyUnpOMU4yVjZPVFJTT1hOTVdtUXRjakZ0VTNOVE1IVkdaVmR6SW4wIn0sImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImNvbXBhbnlOYW1lIjoiTXIgV2FsbGV0IFB0eSBMdGQiLCJyZWdpc3RyYXRpb25OdW1iZXIiOiJBQ04xMjM0NTY3ODkiLCJzdGF0dXMiOiJhY3RpdmUiLCJfc2QiOlsic0EzTURkTVEwQXNXZE9oQW9zc1ROUnAxY0t4dmZnY0FhdFloV3BOVUJHRSIsIkhsRHhsVktQQk11UExJZ3JqekdWZWZtZG1PcWJ1dlUyb3pYSTRTaFlnSW8iLCJqcm9FY1BUalRPeVUxWGo5TEQxS2o5SlhRSnJUX3NhdUlWc0pVLUxqQUNJIl19LCJ2YWxpZEZyb20iOiIyMDI2LTAzLTI1VDAyOjM5OjEwLjYxNjcwNzQyM1oiLCJ2YWxpZCI6IjIwMjctMDMtMjVUMDI6Mzk6MTAuNjE2NzUxNzE1WiJ9LCJqdGkiOiJ1cm46dXVpZDozNmZiOGRkOC0xNTA0LTQ5ZWItYWExNy1iNWY4NjQwY2EyZTkifQ.qC2lS5ZipEKhik7kiR3SIIsAG4xn68q698aWD7A-H1McrJg-9-dEt2TSg9AG1m2Lwnl9Mf_PTszxvv-KnXm3Cw",
+//     "disclosures": "WyJwNW9QLVVGUVNxUjQyUEVFOUE3QzlRIiwianVyaXNkaWN0aW9uIiwiQVUiXQ~WyJGTkR1QXlTQmd5OTZHUktmTnpKRk9BIiwiaW5jb3Jwb3JhdGlvbkRhdGUiLCIyMDE1LTA2LTAxIl0~WyJEY21EMURKbzQtZlFtVXRqQWhraG9BIiwicmVnaXN0ZXJlZEFkZHJlc3MiLCIxMjMgRm94IFN0LCBTeWRuZXksIEFVIl0",
+//     "addedOn": "2026-03-25T02:39:10.627648631Z",
+//     "pending": false,
+//     "format": "jwt_vc_json",
+//     "parsedDocument": {
+//       "@context": [
+//         "https://www.w3.org/ns/credentials/v2"
+//       ],
+//       "id": "urn:uuid:36fb8dd8-1504-49eb-aa17-b5f8640ca2e9",
+//       "type": [
+//         "VerifiableCredential",
+//         "CorporateRegistrationCredential"
+//       ],
+//       "name": "Corporate Registration Credential",
+//       "description": "Credential proving that a company is officially registered with the relevant corporate registry.",
+//       "issuer": {
+//         "type": [
+//           "Profile"
+//         ],
+//         "name": "Australian Securities & Investments Commission",
+//         "url": "https://www.asic.gov.au/for-business-and-companies/companies/register-a-company/",
+//         "image": "https://download.asic.gov.au/asic-nextgen/img/asic-logo.svg",
+//         "background_color": "#FDFDFF",
+//         "text_color": "#FFFFFF",
+//         "id": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+//       },
+//       "credentialSubject": {
+//         "companyName": "Mr Wallet Pty Ltd",
+//         "registrationNumber": "ACN123456789",
+//         "status": "active",
+//         "_sd": [
+//           "sA3MDdMQ0AsWdOhAossTNRp1cKxvfgcAatYhWpNUBGE", -- jurisdiction
+//           "HlDxlVKPBMuPLIgrjzGVefmdmOqbuvU2ozXI4ShYgIo", -- incorporation date
+//           "jroEcPTjTOyU1Xj9LD1Kj9JXQJrT_sauIVsJU-LjACI"  -- registered address
+//         ]
+//       },
+//       "validFrom": "2026-03-25T02:39:10.616707423Z",
+//       "valid": "2027-03-25T02:39:10.616751715Z"
+//     }
+//   }
+// ]

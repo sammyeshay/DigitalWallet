@@ -1,0 +1,139 @@
+// Below is an example credential schema for issuing a sanctions screening credential.
+// It contains the following data:
+//    - name
+//    - DOB
+//    - screening date
+//    - screening result
+//    - lists checked
+//    - jurisdiction (state)
+//    - currently only DOB and jurisdiction are SD
+{
+  "issuerKey": {
+    "type": "jwk",
+    "jwk": {
+      "kty": "OKP",
+      "d": "AZNSeOgzDYq1feMCzA49vXVHh2pH0Li8KgCrYnWR4T4",
+      "crv": "Ed25519",
+      "kid": "EJAaRtUjY8pvhcC6Wd-ywqhZvgR3z6MqUIcf9DrD60E",
+      "x": "qo0ErUpaI6WalUW6G3u7ez94R9sLZd-r1mSsS0uFeWs"
+    }
+  },
+  "credentialConfigurationId": "SanctionScreeningCredential_jwt_vc_json",
+  "credentialData": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2"
+    ],
+    "id": "",
+    "type": [
+      "VerifiableCredential",
+      "SanctionScreeningCredential"
+    ],
+    "name": "Sanctions Screening Credential",
+    "description": "Credential confirming that an individual or entity has been screened against international sanctions lists.",
+    "issuer": {
+      "type": [
+        "Profile"
+      ],
+      "name": "Australian Government: Department of Foreign Affairs and Trade",
+      "url": "https://www.dfat.gov.au/international-relations/security/sanctions",
+      "image": "https://www.abrs.gov.au/themes/custom/mbr/logo.png",
+      "background_color": "#546A7B",
+      "text_color": "#FFFFFF"
+    },
+    "credentialSubject": {
+      "name": "Mr Wallet",
+      "DOB": "19/12/96",
+      "screeningDate": "2026-03-01",
+      "screeningResult": "clear",
+      "listsChecked": [
+        "UN",
+        "OFAC",
+        "EU"
+      ],
+      "jurisdiction": "AU",
+      "status": "active"
+    }
+  },
+  "mapping": {
+    "id": "<uuid>",
+    "issuer": {
+      "id": "<issuerDid>"
+    },
+    "credentialSubject": {
+      "id": "<subjectDid>"
+    },
+    "validFrom": "<timestamp>",
+    "valid": "<timestamp-in:365d>"
+  },
+  "selectiveDisclosure": {
+    "fields": {
+      "credentialSubject": {
+        "sd": false,
+        "children": {
+          "fields": {
+            "DOB": {
+              "sd": true
+            },
+            "jurisdiction": {
+              "sd": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "issuerDid": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+}
+// Below is credential offer URL that can be used to claim credential in wallet. 
+// openid-credential-offer://?credential_offer_uri=http%3A%2F%2Flocalhost%3A7002%2Fdraft13%2FcredentialOffer%3Fid%3D433e184b-ed7a-479a-8a6c-aad9a932261e
+// Below is the response body recieved by the wallet as an example of the format.
+// [
+//   {
+//     "wallet": "63b763ad-d0eb-4d98-963c-89e19e3eee3d",
+//     "id": "urn:uuid:2e4482f6-d7f1-408e-b81f-31d49e3a22b8",
+//     "document": "eyJraWQiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAjRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsInR5cCI6IkpXVCIsImFsZyI6IkVkRFNBIn0.eyJpc3MiOiJkaWQ6andrOmV5SnJkSGtpT2lKUFMxQWlMQ0pqY25ZaU9pSkZaREkxTlRFNUlpd2lhMmxrSWpvaVJVcEJZVkowVldwWk9IQjJhR05ETmxka0xYbDNjV2hhZG1kU00zbzJUWEZWU1dObU9VUnlSRFl3UlNJc0luZ2lPaUp4YnpCRmNsVndZVWsyVjJGc1ZWYzJSek4xTjJWNk9UUlNPWE5NV21RdGNqRnRVM05UTUhWR1pWZHpJbjAiLCJzdWIiOiIiLCJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvbnMvY3JlZGVudGlhbHMvdjIiXSwiaWQiOiJ1cm46dXVpZDoyZTQ0ODJmNi1kN2YxLTQwOGUtYjgxZi0zMWQ0OWUzYTIyYjgiLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiU2FuY3Rpb25TY3JlZW5pbmdDcmVkZW50aWFsIl0sIm5hbWUiOiJTYW5jdGlvbnMgU2NyZWVuaW5nIENyZWRlbnRpYWwiLCJkZXNjcmlwdGlvbiI6IkNyZWRlbnRpYWwgY29uZmlybWluZyB0aGF0IGFuIGluZGl2aWR1YWwgb3IgZW50aXR5IGhhcyBiZWVuIHNjcmVlbmVkIGFnYWluc3QgaW50ZXJuYXRpb25hbCBzYW5jdGlvbnMgbGlzdHMuIiwiaXNzdWVyIjp7InR5cGUiOlsiUHJvZmlsZSJdLCJuYW1lIjoiQXVzdHJhbGlhbiBHb3Zlcm5tZW50OiBEZXBhcnRtZW50IG9mIEZvcmVpZ24gQWZmYWlycyBhbmQgVHJhZGUiLCJ1cmwiOiJodHRwczovL3d3dy5kZmF0Lmdvdi5hdS9pbnRlcm5hdGlvbmFsLXJlbGF0aW9ucy9zZWN1cml0eS9zYW5jdGlvbnMiLCJpbWFnZSI6Imh0dHBzOi8vd3d3LmFicnMuZ292LmF1L3RoZW1lcy9jdXN0b20vbWJyL2xvZ28ucG5nIiwiYmFja2dyb3VuZF9jb2xvciI6IiM1NDZBN0IiLCJ0ZXh0X2NvbG9yIjoiI0ZGRkZGRiIsImlkIjoiZGlkOmp3azpleUpyZEhraU9pSlBTMUFpTENKamNuWWlPaUpGWkRJMU5URTVJaXdpYTJsa0lqb2lSVXBCWVZKMFZXcFpPSEIyYUdORE5sZGtMWGwzY1doYWRtZFNNM28yVFhGVlNXTm1PVVJ5UkRZd1JTSXNJbmdpT2lKeGJ6QkZjbFZ3WVVrMlYyRnNWVmMyUnpOMU4yVjZPVFJTT1hOTVdtUXRjakZ0VTNOVE1IVkdaVmR6SW4wIn0sImNyZWRlbnRpYWxTdWJqZWN0Ijp7Im5hbWUiOiJNciBXYWxsZXQiLCJzY3JlZW5pbmdEYXRlIjoiMjAyNi0wMy0wMSIsInNjcmVlbmluZ1Jlc3VsdCI6ImNsZWFyIiwibGlzdHNDaGVja2VkIjpbIlVOIiwiT0ZBQyIsIkVVIl0sIl9zZCI6WyIyMGJjLWd6ZDZGN3pCUGlPR2VqQzZ3WDdTSjBrdzZ6Y0V6eXg5ZWFCQ3prIiwiMzZIVmRpNTJ2RllMd3VvWXVGeHl5eURmSmZmTEh6YjNCdVJpaVhJV19kZyJdfSwidmFsaWRGcm9tIjoiMjAyNi0wMy0yNVQwMzowNTowNi4yMzExMTgyNTRaIiwidmFsaWQiOiIyMDI3LTAzLTI1VDAzOjA1OjA2LjIzMTE4MTc1NFoifSwianRpIjoidXJuOnV1aWQ6MmU0NDgyZjYtZDdmMS00MDhlLWI4MWYtMzFkNDllM2EyMmI4In0.8xS8mKrqnc_9gltNzhEB0fQA41sjRGkOtil3UGiHXp-N5mO1wjpZSPzFSUm-BuxG0yEliyZSqdmvUbFIRe-TDg",
+//     "disclosures": "WyI5Y0p4S2MtWnV2M3RRZlQzUktuUXdRIiwiRE9CIiwiMTkvMTIvOTYiXQ~WyJNMUpTOFhuM2k1MXhjbmpzcWQzXzhnIiwianVyaXNkaWN0aW9uIiwiQVUiXQ",
+//     "addedOn": "2026-03-25T03:05:06.243082338Z",
+//     "pending": false,
+//     "format": "jwt_vc_json",
+//     "parsedDocument": {
+//       "@context": [
+//         "https://www.w3.org/ns/credentials/v2"
+//       ],
+//       "id": "urn:uuid:2e4482f6-d7f1-408e-b81f-31d49e3a22b8",
+//       "type": [
+//         "VerifiableCredential",
+//         "SanctionScreeningCredential"
+//       ],
+//       "name": "Sanctions Screening Credential",
+//       "description": "Credential confirming that an individual or entity has been screened against international sanctions lists.",
+//       "issuer": {
+//         "type": [
+//           "Profile"
+//         ],
+//         "name": "Australian Government: Department of Foreign Affairs and Trade",
+//         "url": "https://www.dfat.gov.au/international-relations/security/sanctions",
+//         "image": "https://www.abrs.gov.au/themes/custom/mbr/logo.png",
+//         "background_color": "#546A7B",
+//         "text_color": "#FFFFFF",
+//         "id": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoiRUpBYVJ0VWpZOHB2aGNDNldkLXl3cWhadmdSM3o2TXFVSWNmOURyRDYwRSIsIngiOiJxbzBFclVwYUk2V2FsVVc2RzN1N2V6OTRSOXNMWmQtcjFtU3NTMHVGZVdzIn0"
+//       },
+//       "credentialSubject": {
+//         "name": "Mr Wallet",
+//         "screeningDate": "2026-03-01",
+//         "screeningResult": "clear",
+//         "listsChecked": [
+//           "UN",
+//           "OFAC",
+//           "EU"
+//         ],
+//         "_sd": [
+//           "20bc-gzd6F7zBPiOGejC6wX7SJ0kw6zcEzyx9eaBCzk", -- DOB
+//           "36HVdi52vFYLwuoYuFxyyyDfJffLHzb3BuRiiXIW_dg"  -- jurisdiction
+//         ]
+//       },
+//       "validFrom": "2026-03-25T03:05:06.231118254Z",
+//       "valid": "2027-03-25T03:05:06.231181754Z"
+//     }
+//   }
+// ]

@@ -1,0 +1,3 @@
+Below are terminal commands to create QR code in terminal from credential offer URL. 
+python3 -m pip install "qrcode[pil]"
+python3 -c "import qrcode; url='***insert URL***'; img = qrcode.make(url); img.show()"

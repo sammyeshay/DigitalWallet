@@ -1,0 +1,19 @@
+.revokeBtn {
+  margin-top: 20px;
+}
+
+.status-unrevoked {
+  color: green;
+}
+
+.status-revoked {
+  color: red;
+}
+
+.issued {
+  color: #0f5132;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 12px;
+  font-weight: bold;
+}

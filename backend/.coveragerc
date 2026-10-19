@@ -1,0 +1,2 @@
+[run]
+omit = ./tests/*,main.py,*__init__.py*,database/database.py,wallet/credential_encryption.py

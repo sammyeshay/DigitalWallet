@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wallet Issuer</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <link rel="stylesheet" href="/static/shared/pages.css" />
+  <link rel="stylesheet" href="/static/issuer/issuer.css" />
+  <script src="/static/issuer/issuer.js" defer></script>
+</head>
+<body>
+  <div class="card">
+    <h1>Issuer Page</h1>
+    <p>Generate an issuance offer QR code and scan it with the wallet app.</p>
+
+    <label for="credentialType">Credential type</label>
+    <select id="credentialType">
+      {% for credential_type in credential_types %}
+      <option value="{{ credential_type.value }}">{{ credential_type.label }}</option>
+      {% endfor %}
+    </select>
+
+    <button id="generateBtn">Generate QR Code</button>
+
+    <div class="qr-box">
+      <div id="qrcode"></div>
+      <div id="status" class="success hidden"></div>
+      <div id="error" class="error hidden"></div>
+    </div>
+
+    <div id="meta" class="meta hidden"></div>
+  </div>
+</body>
+</html>

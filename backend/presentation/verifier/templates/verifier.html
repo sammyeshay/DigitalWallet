@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wallet Verifier</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <link rel="stylesheet" href="/static/shared/pages.css" />
+  <link rel="stylesheet" href="/static/verifier/verifier.css" />
+  <script src="/static/verifier/verifier.js" defer></script>
+</head>
+<body>
+  <div class="card">
+    <h1>Verifier Page</h1>
+    <p>Generate a verification request QR code and scan it with the wallet app.</p>
+
+    <button id="optionsBtn">Select Options</button>
+    <button id="generateBtn">Generate QR Code</button>
+
+    <div class="qr-box">
+      <div id="qrcode"></div>
+      <div id="status" class="success hidden"></div>
+      <div id="error" class="error hidden"></div>
+    </div>
+
+    <button id="showCredentialsBtn" class="hidden">Show Credentials</button>
+
+    <div id="meta" class="meta hidden"></div>
+  </div>
+
+  <!-- Options Modal -->
+  <div id="optionsOverlay" class="options-overlay">
+    <div class="options-box">
+      <button class="options-close" id="optionsClose">&#x2715;</button>
+      <h2 style="margin: 0 0 4px">Verifier Settings</h2>
+      <p style="margin: 0 0 20px; font-size: 13px; color: #aab4d4;">Configure the verification request.</p>
+
+      <div class="section-label">VP Policies</div>
+      <p style="font-size: 12px; color: #aab4d4; margin: 0 0 10px;">Applied to the overall presentation.</p>
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+        <div class="policy-row">
+          <label class="checkbox-row">
+            <input type="checkbox" id="vp_minimum_credentials">
+            minimum-credentials
+          </label>
+          <input type="number" class="args-input" id="vp_minimum_credentials_args" min="1" value="1">
+        </div>
+        <div class="policy-row">
+          <label class="checkbox-row">
+            <input type="checkbox" id="vp_maximum_credentials">
+            maximum-credentials
+          </label>
+          <input type="number" class="args-input" id="vp_maximum_credentials_args" min="1" value="1">
+        </div>
+        <label class="checkbox-row"><input type="checkbox" id="vp_holder_binding"> holder-binding</label>
+      </div>
+
+      <div class="section-label">VC Policies</div>
+      <p style="font-size: 12px; color: #aab4d4; margin: 0 0 10px;">Applied to all requested credentials.</p>
+      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+        <label class="checkbox-row"><input type="checkbox" id="vc_signature"> signature</label>
+        <label class="checkbox-row"><input type="checkbox" id="vc_expired"> expired</label>
+        <label class="checkbox-row"><input type="checkbox" id="vc_not_before"> not-before</label>
+        <label class="checkbox-row"><input type="checkbox" id="vc_credential_status"> credential-status</label>
+      </div>
+
+      <div class="section-label">Credential Types</div>
+      <p style="font-size: 12px; color: #aab4d4; margin: 0 0 10px;">
+        Select credentials to request. Expand to set per-credential policies.
+      </p>
+      <div id="credentialList" style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px;">
+        {% for cred in credential_types %}
+        <div class="credential-item">
+          <div class="credential-header">
+            <input type="checkbox" class="cred-checkbox" value="{{ cred.value }}">
+            <span class="cred-label">{{ cred.label }}</span>
+            <span class="expand-arrow">&#9660;</span>
+          </div>
+          <div class="credential-policies">
+            <div class="policies-label">Policies for this credential only:</div>
+            <div class="policy-row">
+              <label class="checkbox-row"><input type="checkbox" value="signature"> signature</label>
+            </div>
+            <div class="policy-row">
+              <label class="checkbox-row"><input type="checkbox" value="expired"> expired</label>
+            </div>
+            <div class="policy-row">
+              <label class="checkbox-row"><input type="checkbox" value="not-before"> not-before</label>
+            </div>
+            <div class="policy-row">
+              <label class="checkbox-row">
+                <input type="checkbox" value="credential-status"> credential-status
+              </label>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <button id="applyOptions" style="margin: 0;">Apply</button>
+    </div>
+  </div>
+
+  <!-- Credential Display Modal -->
+  <div id="credentialModal" class="options-overlay">
+    <div class="options-box">
+      <button class="options-close" id="modalCloseBtn">&#x2715;</button>
+      <h2 style="margin: 0 0 20px">Presented Credentials</h2>
+      <div id="modalCredentials" style="display: flex; flex-direction: column; gap: 6px;"></div>
+    </div>
+  </div>
+</body>
+</html>
